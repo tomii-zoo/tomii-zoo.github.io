@@ -43,6 +43,14 @@ function saveLS() {
 }
 
 /**
+ * Clear Local Storage
+ */
+function clearLS() {
+  localStorage.clear();
+  loadLS();
+}
+
+/**
  * Download as textfile
  */
 function downloadText() {
