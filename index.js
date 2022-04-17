@@ -1,6 +1,15 @@
 const LSKey = "edit"
 const TextAreaID = "edit";
+const FileNameID = "filename";
 const InitializeValue = "input your text...";
+
+/**
+ * Reference TextArea Value
+ */
+function getFilename() {
+  const textbox = document.getElementById(FileNameID);
+  return textbox.value;
+}
 
 /**
  * Reference TextArea Value
@@ -42,7 +51,7 @@ function downloadText() {
   const url = URL.createObjectURL(blobedText);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'edittext.txt';
+  link.download = getFilename();
   link.value = "downloadlink";
   link.click();
 }

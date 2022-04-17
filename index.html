@@ -5,12 +5,14 @@
     </head>
     <body>
         <h1>Simple Editor</h1>
-
+        File Name<br/>
+        <input type="text" id="filename" value="newfile.txt">
+        <br/>
+        <br/>
+        File Content<br/>
         <textarea id="edit" cols="100" rows="30"></textarea>
-        
         <br/>
         <button onclick="downloadText()">Download</button>
-
         <br/>
         <button onclick="saveLS()">Save</button>
         <button onclick="loadLS()">Load</button>
