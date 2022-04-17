@@ -3,6 +3,14 @@ const TextAreaID = "edit";
 const InitializeValue = "input your text...";
 
 /**
+ * Reference TextArea Value
+ */
+function getTextAreaValue() {
+  const textarea = document.getElementById(TextAreaID);
+  return textarea.value;
+}
+
+/**
  * Load Local Storage
  */
 function loadLS() {
@@ -23,4 +31,18 @@ function saveLS() {
   const textarea = document.getElementById(TextAreaID);
   localStorage.setItem(LSKey, textarea.value);
   console.log("save localstorage => " + textarea.value);
+}
+
+/**
+ * Download as textfile
+ */
+function downloadText() {
+  const text = getTextAreaValue();
+  const blobedText = new Blob([text], {type: 'text/plain'});
+  const url = URL.createObjectURL(blobedText);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'edittext.txt';
+  link.value = "downloadlink";
+  link.click();
 }
