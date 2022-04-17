@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <body>
+    <head>
         <script src="index.js"></script>
+    </head>
+    <body>
         <h1>Hello World</h1>
         <p>I'm hosted with GitHub Pages.</p>
 
-        <textarea cols="50" rows="15">aaaaaaaaaaaaaa</textarea>
-
+        <textarea id="edit" cols="50" rows="15"></textarea>
         <br/>
+        <button onclick="saveLS()">Save</button>
+        <button onclick="loadLS()">Load</button>
 
-        <button>Save</button>
-        <button>Load</button>
+        <script>
+            loadLS();
+        </script>
     </body>
 </html>
