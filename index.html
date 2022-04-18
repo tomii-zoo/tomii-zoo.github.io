@@ -6,21 +6,32 @@
     </head>
     <body>
         <h1>Simple Editor</h1>
+        <hr>
         File Name<br/>
         <input type="text" id="filename" value="newfile.txt">
         <br/>
         <br/>
         File Content<br/>
+        <select id="list"></select>
+        <br/>
         <textarea id="edit" cols="100" rows="30"></textarea>
         <br/>
-        <button onclick="downloadText()">Download</button>
+        <button onclick="downloadText()">Import</button>
+        <button onclick="downloadText()">Export</button>
+        <br/>
+        <br/>Storage Key
+        <br/>
+        <input type="text" id="LSKeyBox" value="edit">
         <br/>
         <button onclick="saveLS()">Save</button>
         <button onclick="loadLS()">Load</button>
-        <button onclick="clearLS()">Clear</button>
-
+        <br/>
+        <br/>
+        <button onclick="clearLS()">Clear LocalStorage</button>
+        <hr>
         <script>
             loadLS();
+            setList();
         </script>
     </body>
 </html>

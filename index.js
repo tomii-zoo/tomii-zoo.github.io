@@ -40,6 +40,16 @@ function saveLS() {
   const textarea = document.getElementById(TextAreaID);
   localStorage.setItem(LSKey, textarea.value);
   console.log("save localstorage => " + textarea.value);
+
+  //saved sign
+  let p = document.createElement("p");
+  p.textContent = "SAVED!";
+  document.body.appendChild(p);
+
+  //key value
+  p = document.createElement("p");
+  p.textContent = `${LSKey} => ${textarea.value}`;
+  document.body.appendChild(p);
 }
 
 /**
@@ -62,4 +72,19 @@ function downloadText() {
   link.download = getFilename();
   link.value = "downloadlink";
   link.click();
+}
+
+function setList() {
+  const sel = document.getElementById("list");
+
+  for (var i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    console.log(`key => ${key}`);
+    console.log(`value => ${localStorage[key]}`);
+
+    // create dropdown
+    const op = document.createElement("option");
+    op.textContent = key;
+    sel.appendChild(op);
+  }
 }
