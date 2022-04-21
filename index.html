@@ -6,11 +6,14 @@
     </head>
     <body>
         <div id="content">
-            File Name<br/>
+            Text File Name<br/>
             <input type="text" id="filename" value="newfile.txt">
             <br/>
             <br/>
-            File Content<br/>
+            <input type="file" id="openfile" change="openFile()">
+            <br/>
+            <br/>
+            Text File Editor<br/>
             <!--
             <select id="list"></select>
             <br/>
@@ -20,21 +23,12 @@
         </div>
         <br/>
         <div id="menu">
-            <button onclick="downloadText()">Export</button>
-            <!--
-            <button onclick="downloadText()">Export</button>
-            <br/>
-            <br/>Storage Key
-            <br/>
-            <input type="text" id="LSKeyBox" value="edit">
-            -->
-            <br/>
-            <br/>
-            <button onclick="saveLS()">Save</button><br/>
-            <button onclick="loadLS()">Load</button><br/>
-            <br/>
-            <button onclick="clearLS()">Clear Texts</button>
+            <button onclick="downloadText()">Export</button><br/><br/>
+            <button onclick="saveLS()">Save</button><br/><br/>
+            <button onclick="loadLS()">Load</button><br/><br/>
+            <button onclick="clearLS()">Delete LocalStorage</button>
             <script>
+                printLS();
                 initialize();
             </script>
         </div>

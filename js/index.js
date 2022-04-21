@@ -1,6 +1,7 @@
 const LSKey = "edit"
 const TextAreaID = "edit";
 const FileNameID = "filename";
+const OpenFileID = "openfile";
 const InitializeValue = "input your text...";
 
 /**
@@ -48,6 +49,7 @@ function saveLS() {
   p = document.createElement("p");
   p.textContent = `${key} => ${textarea.value}`;
   document.body.appendChild(p);
+  printLS();
 }
 
 /**
@@ -59,7 +61,10 @@ function clearLS() {
 }
 
 function initialize() {
-  clearLS();
+  loadLS();
+
+  let myfile = document.getElementById(OpenFileID);
+  myfile.addEventListener('change', openFile);
 }
 
 /**
@@ -76,17 +81,24 @@ function downloadText() {
   link.click();
 }
 
-function setList() {
-  const sel = document.getElementById("list");
+function openFile() {
+  let element = document.getElementById(OpenFileID);
+  let files = element.files;
+  
+  //ファイル読み込み
+  var file = files[0];
+  var fileReader = new FileReader();
+  fileReader.readAsText(file);
+  fileReader.onload = () => {
+    const textarea = document.getElementById(TextAreaID);
+    textarea.value = fileReader.result;
+  };
+}
 
+function printLS() {
   for (var i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     console.log(`key => ${key}`);
     console.log(`value => ${localStorage[key]}`);
-
-    // create dropdown
-    const op = document.createElement("option");
-    op.textContent = key;
-    sel.appendChild(op);
   }
 }
