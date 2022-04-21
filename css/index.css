@@ -1,3 +1,10 @@
+body {
+  background-color: rgb(0 0 0 / 0.66);  
+  color: white;
+  font-family: "游ゴシック体", "YuGothic", "游ゴシック", "Yu Gothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
+}
+
 #edit {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(255 255 255);
+  color: black;
 }

@@ -2,7 +2,6 @@ const LSKey = "edit"
 const TextAreaID = "edit";
 const FileNameID = "filename";
 const InitializeValue = "input your text...";
-const LSKeySelected = "LSKeyBox";
 
 /**
  * Reference TextArea Value
@@ -25,9 +24,8 @@ function getTextAreaValue() {
  */
 function loadLS() {
   const textarea = document.getElementById(TextAreaID);
-  const key = document.getElementById(LSKeySelected);
 
-  const data = localStorage.getItem(key);
+  const data = localStorage.getItem(LSKey);
   if (data != null) {
     textarea.value = data;
   } else {
@@ -41,9 +39,9 @@ function loadLS() {
  */
 function saveLS() {
   const textarea = document.getElementById(TextAreaID);
-  const key = document.getElementById(LSKeySelected);
+  const key = LSKey;
 
-  localStorage.setItem(key.value, textarea.value);
+  localStorage.setItem(key, textarea.value);
   console.log("save localstorage => " + textarea.value);
 
   //saved sign
@@ -53,7 +51,7 @@ function saveLS() {
 
   //key value
   p = document.createElement("p");
-  p.textContent = `${key.value} => ${textarea.value}`;
+  p.textContent = `${key} => ${textarea.value}`;
   document.body.appendChild(p);
 }
 
