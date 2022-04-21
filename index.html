@@ -5,34 +5,38 @@
         <script src="./js/index.js"></script>
     </head>
     <body>
-        File Name<br/>
-        <input type="text" id="filename" value="newfile.txt">
+        <div id="content">
+            File Name<br/>
+            <input type="text" id="filename" value="newfile.txt">
+            <br/>
+            <br/>
+            File Content<br/>
+            <!--
+            <select id="list"></select>
+            <br/>
+            -->
+            <textarea id="edit"
+            placeholder="編集するテキストを入力して下さい..."></textarea>
+        </div>
         <br/>
-        <br/>
-        File Content<br/>
-        <!--
-        <select id="list"></select>
-        <br/>
-        -->
-        <textarea id="edit"
-         placeholder="編集するテキストを入力して下さい..."></textarea>
-        <br/>
-        <button onclick="downloadText()">Import</button>
-        <!--
-        <button onclick="downloadText()">Export</button>
-        <br/>
-        <br/>Storage Key
-        <br/>
-        <input type="text" id="LSKeyBox" value="edit">
-        -->
-        <br/>
-        <button onclick="saveLS()">Save</button>
-        <button onclick="loadLS()">Load</button>
-        <br/>
-        <br/>
-        <button onclick="clearLS()">Clear Texts</button>
-        <script>
-            initialize();
-        </script>
+        <div id="menu">
+            <button onclick="downloadText()">Import</button>
+            <!--
+            <button onclick="downloadText()">Export</button>
+            <br/>
+            <br/>Storage Key
+            <br/>
+            <input type="text" id="LSKeyBox" value="edit">
+            -->
+            <br/>
+            <button onclick="saveLS()">Save</button>
+            <button onclick="loadLS()">Load</button>
+            <br/>
+            <br/>
+            <button onclick="clearLS()">Clear Texts</button>
+            <script>
+                initialize();
+            </script>
+        </div>
     </body>
 </html>

@@ -2,6 +2,7 @@ body {
   background-color: rgb(75 75 120);  
   color: white;
   font-family: "游ゴシック体", "YuGothic", "游ゴシック", "Yu Gothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
+  width: 100%
 }
 
 #edit {
@@ -13,4 +14,17 @@ body {
   width: 90%;
   height: 400px;
   line-height: 1.2;
+}
+
+button {
+  width: 30%;
+  height: 20%;
+}
+
+#content {
+  height: 80%
+}
+
+#menu {
+  height: 20%
 }
