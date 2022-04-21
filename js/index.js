@@ -95,6 +95,15 @@ function openFile() {
   };
 }
 
+function eva() {
+  const text = getTextAreaValue();
+  const out = eval(text);
+
+  let p = document.createElement("p");
+  p.textContent = out;
+  document.body.appendChild(p);
+}
+
 function printLS() {
   for (var i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
