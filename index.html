@@ -14,7 +14,8 @@
         <select id="list"></select>
         <br/>
         -->
-        <textarea id="edit" cols="60" rows="30"></textarea>
+        <textarea id="edit" cols="60" rows="30" 
+         placeholder="編集するテキストを入力して下さい..."></textarea>
         <br/>
         <button onclick="downloadText()">Import</button>
         <!--
@@ -29,9 +30,9 @@
         <button onclick="loadLS()">Load</button>
         <br/>
         <br/>
-        <button onclick="clearLS()">Clear LocalStorage</button>
+        <button onclick="clearLS()">Clear Texts</button>
         <script>
-            loadLS();
+            initialize();
         </script>
     </body>
 </html>

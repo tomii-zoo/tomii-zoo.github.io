@@ -25,12 +25,7 @@ function getTextAreaValue() {
 function loadLS() {
   const textarea = document.getElementById(TextAreaID);
 
-  const data = localStorage.getItem(LSKey);
-  if (data != null) {
-    textarea.value = data;
-  } else {
-    textarea.value = InitializeValue;
-  }
+  textarea.value = localStorage.getItem(LSKey);
   console.log("load localstorage => " + textarea.value);
 }
 
@@ -61,6 +56,10 @@ function saveLS() {
 function clearLS() {
   localStorage.clear();
   loadLS();
+}
+
+function initialize() {
+  clearLS();
 }
 
 /**
