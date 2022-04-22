@@ -104,6 +104,13 @@ function eva() {
   document.body.appendChild(p);
 }
 
+function to_binary() {
+  const text = getTextAreaValue();
+  const binaryStringArrays = Array.from((new TextEncoder('utf-8')).encode(text)).map(v => v.toString(16).toUpperCase())
+  const textarea = document.getElementById(TextAreaID);
+  textarea.value = binaryStringArrays;
+}
+
 function printLS() {
   for (var i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
