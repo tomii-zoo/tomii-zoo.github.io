@@ -140,4 +140,22 @@ function setupEvents() {
   document.getElementById(ButtonEvalID).onclick = eva;
   document.getElementById(ButtonBinaryID).onclick = to_binary;
   document.getElementById(ButtonClearID).onclick = clearLS;
+
+  document.getElementById(TextAreaID).onkeydown = function(e) { 
+    onPressTabKey(e, this);
+  }
+}
+
+function onPressTabKey( e, obj ) {
+  if ( e.keyCode != 9 ) {
+    return;
+  }
+
+  e.preventDefault();
+  const cursorPosition = obj.selectionStart;
+  const cursorLeft     = obj.value.substr( 0, cursorPosition );
+  const cursorRight    = obj.value.substr( cursorPosition, obj.value.length );
+
+  obj.value = cursorLeft + "\t" + cursorRight;
+  obj.selectionEnd = cursorPosition+1;
 }
