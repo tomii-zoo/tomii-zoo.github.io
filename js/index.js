@@ -72,10 +72,6 @@ function clearLS() {
 
 function initialize() {
   loadLS();
-
-  let myfile = document.getElementById(OpenFileID);
-  myfile.addEventListener('change', openFile);
-
   setupEvents();
 }
 
