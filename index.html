@@ -10,7 +10,7 @@
             <input type="text" id="filename" value="newfile.txt">
             <br/>
             <br/>
-            <input type="file" id="openfile" change="openFile()">
+            <input type="file" id="openfile">
             <br/>
             <br/>
             <textarea id="edit"
@@ -18,19 +18,20 @@
         </div>
         <br/>
         <div id="menu">
-            <button id="export" onclick="downloadText()">Export</button><br/><br/>
-            <button id="save" onclick="saveLS()">Save</button><br/><br/>
-            <button id="load" onclick="loadLS()">Load</button><br/><br/>
-            <button id="eval" onclick="eva()">Eval</button><br/><br/>
-            <button id="binary" onclick="to_binary()">StringToBinary</button><br/><br/>
-            <button id="clear" onclick="clearLS()">Delete LocalStorage</button>
-            <script>
-                printLS();
-                initialize();
-            </script>
+            <button id="export">Export</button> <br/><br/>
+            <button id="save">Save</button> <br/><br/>
+            <button id="load">Load</button> <br/><br/>
+            <button id="eval">Eval</button> <br/><br/>
+            <button id="binary">StringToBinary</button> <br/><br/>
+            <button id="clear">Delete LocalStorage</button>
+            
             <br/><br/>
             <hr>
             v0.1.1
+
+            <script>
+                initialize();
+            </script>
         </div>
     </body>
 </html>

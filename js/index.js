@@ -2,16 +2,17 @@ const LSKey = "edit"
 const TextAreaID = "edit";
 const FileNameID = "filename";
 const OpenFileID = "openfile";
-const InitializeValue = "input your text...";
 
 // Button IDs
-const ExportButtonID = "export";
-const SaveButtonID = "save";
-const LoadButtonID = "load";
+const ButtonExportID = "export";
+const ButtonSaveID = "save";
+const ButtonLoadID = "load";
 
-const EvalButtonID = "eval";
-const BinaruButtonID = "binary";
-const ClearButtonID = "clear";
+const ButtonEvalID = "eval";
+const ButtonBinaryID = "binary";
+const ButtonClearID = "clear";
+
+const InitializeValue = "input your text...";
 
 /**
  * Reference TextArea Value
@@ -74,6 +75,8 @@ function initialize() {
 
   let myfile = document.getElementById(OpenFileID);
   myfile.addEventListener('change', openFile);
+
+  setupEvents();
 }
 
 /**
@@ -126,4 +129,15 @@ function printLS() {
     console.log(`key => ${key}`);
     console.log(`value => ${localStorage[key]}`);
   }
+}
+
+function setupEvents() {
+  document.getElementById(OpenFileID).change = openFile;
+
+  document.getElementById(ButtonExportID).onclick = downloadText;
+  document.getElementById(ButtonSaveID).onclick = saveLS;
+  document.getElementById(ButtonLoadID).onclick = loadLS;
+  document.getElementById(ButtonEvalID).onclick = eva;
+  document.getElementById(ButtonBinaryID).onclick = to_binary;
+  document.getElementById(ButtonClearID).onclick = clearLS;
 }
