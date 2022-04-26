@@ -4,6 +4,15 @@ const FileNameID = "filename";
 const OpenFileID = "openfile";
 const InitializeValue = "input your text...";
 
+// Button IDs
+const ExportButtonID = "export";
+const SaveButtonID = "save";
+const LoadButtonID = "load";
+
+const EvalButtonID = "eval";
+const BinaruButtonID = "binary";
+const ClearButtonID = "clear";
+
 /**
  * Reference TextArea Value
  */

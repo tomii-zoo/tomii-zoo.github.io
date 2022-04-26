@@ -2,8 +2,7 @@ body {
   background-color: darkslateblue;
   color: white;
   font-family: "游ゴシック体", "YuGothic", "游ゴシック", "Yu Gothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
-  width: 100%;
-  margin: 0 auto;
+  width: 90%;
 }
 
 #edit {

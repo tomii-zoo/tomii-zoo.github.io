@@ -20,12 +20,12 @@
         </div>
         <br/>
         <div id="menu">
-            <button onclick="downloadText()">Export</button><br/><br/>
-            <button onclick="saveLS()">Save</button><br/><br/>
-            <button onclick="loadLS()">Load</button><br/><br/>
-            <button onclick="eva()">Eval</button><br/><br/>
-            <button onclick="to_binary()">StringToBinary</button><br/><br/>
-            <button onclick="clearLS()">Delete LocalStorage</button>
+            <button id="export" onclick="downloadText()">Export</button><br/><br/>
+            <button id="save" onclick="saveLS()">Save</button><br/><br/>
+            <button id="load" onclick="loadLS()">Load</button><br/><br/>
+            <button id="eval" onclick="eva()">Eval</button><br/><br/>
+            <button id="binary" onclick="to_binary()">StringToBinary</button><br/><br/>
+            <button id="clear" onclick="clearLS()">Delete LocalStorage</button>
             <script>
                 printLS();
                 initialize();
