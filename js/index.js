@@ -128,7 +128,7 @@ function printLS() {
 }
 
 function setupEvents() {
-  document.getElementById(OpenFileID).change = openFile;
+  document.getElementById(OpenFileID).onchange = openFile;
 
   document.getElementById(ButtonExportID).onclick = downloadText;
   document.getElementById(ButtonSaveID).onclick = saveLS;
