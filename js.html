@@ -1,0 +1,18 @@
+<html>
+  <!-- 
+    https://web-designer.cman.jp/javascript_ref/event_list/
+  -->
+  <h2>JavaScript Local SandBox</h2>
+  Input:</br>
+  <textarea id="a" cols="60" rows="10" placeholder="input your js..."></textarea>
+  </br></br>
+  Result:</br>
+  <textarea id="b" cols="60" rows="10" placeholder="then show js result!"></textarea>
+  <script>
+    const textAreaA = document.getElementById("a");
+    const textAreaB = document.getElementById("b");
+    textAreaA.oninput = () => {
+      textAreaB.value = eval(textAreaA.value);
+    };
+  </script>
+</html>

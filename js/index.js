@@ -103,7 +103,7 @@ function openFile() {
   };
 }
 
-function eva() {
+function evaluate() {
   const text = getTextAreaValue();
   const out = eval(text);
 
