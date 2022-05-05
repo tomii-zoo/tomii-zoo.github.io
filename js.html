@@ -11,6 +11,9 @@
   <script>
     const input = document.getElementById("input");
     const result = document.getElementById("result");
+    input.value = 
+      "let x = document.createElement('hr');\n" 
+    + "document.body.appendChild(x);"
     input.oninput = () => {
       try {
         result.value = eval(input.value);
