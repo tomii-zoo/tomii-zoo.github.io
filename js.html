@@ -4,15 +4,19 @@
   -->
   <h2>JavaScript Local SandBox</h2>
   Input:</br>
-  <textarea id="a" cols="60" rows="10" placeholder="input your js..."></textarea>
+  <textarea id="input" cols="60" rows="10" placeholder="input your js..."></textarea>
   </br></br>
   Result:</br>
-  <textarea id="b" cols="60" rows="10" placeholder="then show js result!"></textarea>
+  <textarea id="result" cols="60" rows="10" placeholder="then show js result!"></textarea>
   <script>
-    const textAreaA = document.getElementById("a");
-    const textAreaB = document.getElementById("b");
-    textAreaA.oninput = () => {
-      textAreaB.value = eval(textAreaA.value);
+    const input = document.getElementById("input");
+    const result = document.getElementById("result");
+    input.oninput = () => {
+      try {
+        result.value = eval(input.value);
+      } catch (err) {
+        result.value = "ERROR!";
+      }
     };
   </script>
 </html>
