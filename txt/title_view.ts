@@ -30,7 +30,8 @@ class TitleView {
   }
 
   public IsEnd() : boolean {
-	return this.m_SelectedMenu >= 0
+	return this.c_MenuStart <= this.m_SelectedMenu
+	    && this.m_SelectedMenu <= this.c_MenuExit;
   }
 }
 
