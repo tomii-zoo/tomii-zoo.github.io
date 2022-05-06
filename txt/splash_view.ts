@@ -17,7 +17,7 @@ class SplashView {
   /**
    * splash animation
    */
-  Update() {
+  public Update() {
 	this.m_Frame++;
 
 	if (this.m_Step == this.c_FadeIn) {

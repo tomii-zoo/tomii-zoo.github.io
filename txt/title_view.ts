@@ -11,10 +11,11 @@ class TitleView {
   private c_MenuConfig = 1;
   private c_MenuExit = 2;
   private c_Msg = "Menus: start(0), config(1), exit(2)";
+
   /**
    * select menu
    */
-  Update() {
+  public Update() {
 	const input = window.prompt(this.c_Msg);
 	this.m_SelectedMenu = Number(input);
 
