@@ -10,12 +10,14 @@ let re = new RegExp('function');
 let filename = "";
 let filetext = "";
 
-function setupEvents() {
+function setup() {
   document.getElementById(InputTextAreaID).oninput = () => {
     update_input();
     update_result();
   };
   document.getElementById(OpenFileID).onchange = openFile;
+
+  update_input();
 }
 
 function openFile() {
@@ -60,4 +62,4 @@ function update_result() {
   }
 }
 
-setupEvents();
+setup();
