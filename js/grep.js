@@ -1,13 +1,20 @@
-// IDs
+// DOM IDs
+const InputTextAreaID = "input";
 const ResultTextAreaID = "result";
 const OpenFileID = "openfile";
 
 // reqular expression pattern
-const re = /function/;
+let re = new RegExp('function');
 
+// fileinfo
 let filename = "";
+let filetext = "";
 
 function setupEvents() {
+  document.getElementById(InputTextAreaID).oninput = () => {
+    update_input();
+    update_result();
+  };
   document.getElementById(OpenFileID).onchange = openFile;
 }
 
@@ -21,15 +28,21 @@ function openFile() {
   const fileReader = new FileReader();
   fileReader.readAsText(file);
   fileReader.onload = () => {
-    update_result(fileReader.result);
+    filetext = fileReader.result;
+    update_result();
   };
 }
 
-function update_result(str) {
+function update_input() {
+  const textarea = document.getElementById(InputTextAreaID);
+  re = new RegExp(textarea.value);
+}
+
+function update_result() {
   // search lines
   console.log(`${filename}:`);
   const textarea = document.getElementById(ResultTextAreaID);
-  const lines = str.split("\n");
+  const lines = filetext.split("\n");
 
   textarea.value = `filename: ${filename}\n`;
   textarea.value += "\n";

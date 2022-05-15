@@ -5,11 +5,16 @@
         <link rel="stylesheet" href="./css/index.css">
     </head>
     <body>
-        <h2>コード解析ツール</h2>
+        <h2>正規表現ツール</h2>
+        <img src="favicon.ico">
+        <p>指定ファイル内の文章を正規表現で検索した結果を返却します。正規表現入力時にリアルタイム検索されます。</p>
         <div id="content">
             <input type="file" id="openfile">
             <br/>
+            <p>正規表現入力</p>
+            <textarea id="input" rows="1" cols="100">function|public|private|\(\)</textarea>
             <br/>
+            <p>ファイル入力</p>
             <textarea id="result" rows="30" cols="100"
             placeholder="ファイルを入力して下さい..."></textarea>
         </div>
