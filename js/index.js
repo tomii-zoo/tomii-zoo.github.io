@@ -133,7 +133,7 @@ function setupEvents() {
   document.getElementById(ButtonExportID).onclick = downloadText;
   document.getElementById(ButtonSaveID).onclick = saveLS;
   document.getElementById(ButtonLoadID).onclick = loadLS;
-  document.getElementById(ButtonEvalID).onclick = eva;
+  document.getElementById(ButtonEvalID).onclick = evaluate;
   document.getElementById(ButtonBinaryID).onclick = to_binary;
   document.getElementById(ButtonClearID).onclick = clearLS;
 
