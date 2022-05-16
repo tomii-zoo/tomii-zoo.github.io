@@ -8,7 +8,7 @@ const ButtonExportID = "export";
 const ButtonSaveID = "save";
 const ButtonLoadID = "load";
 
-const ButtonEvalID = "eval";
+const ButtonEvaluateID = "evaluate";
 const ButtonBinaryID = "binary";
 const ButtonClearID = "clear";
 
@@ -103,7 +103,7 @@ function openFile() {
   };
 }
 
-function evalJS() {
+function evaluateJS() {
   const text = getTextAreaValue();
   const out = eval(text);
 
@@ -133,7 +133,7 @@ function setupEvents() {
   document.getElementById(ButtonExportID).onclick = downloadText;
   document.getElementById(ButtonSaveID).onclick = saveLS;
   document.getElementById(ButtonLoadID).onclick = loadLS;
-  document.getElementById(ButtonEvalID).onclick = evalJS;
+  document.getElementById(ButtonEvaluateID).onclick = evaluateJS;
   document.getElementById(ButtonBinaryID).onclick = to_binary;
   document.getElementById(ButtonClearID).onclick = clearLS;
 
