@@ -6,13 +6,13 @@ body {
 }
 
 a:link {
-  color: blue;
+  color: red;
+}
+a:visited {
+  color: white;
 }
 a:hover {
   color: aqua;
-}
-a:visited {
-  color: red;
 }
 
 #edit {
