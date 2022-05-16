@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+      <link rel="stylesheet" href="./css/index.css">
+  </head>
+  <!-- 
+    reference:
+    https://web-designer.cman.jp/javascript_ref/event_list/
+  -->
+  <body>
+    <h2>JavaScript Local SandBox</h2>
+    Input:</br>
+    <textarea id="input" cols="60" rows="10" placeholder="input your js..."></textarea>
+    </br></br>
+    Result:</br>
+    <textarea id="result" cols="60" rows="10" placeholder="then show js result!"></textarea>
+    <script>
+      const input = document.getElementById("input");
+      const result = document.getElementById("result");
+      input.value = 
+        "let x = document.createElement('hr');\n" 
+      + "document.body.appendChild(x);"
+      input.oninput = () => {
+        try {
+          result.value = eval(input.value);
+        } catch (err) {
+          result.value = "ERROR!";
+        }
+      };
+    </script>
+  </body>
+</html>
