@@ -12,8 +12,13 @@ let filetext = "";
 
 function setup() {
   document.getElementById(InputTextAreaID).oninput = () => {
-    update_input();
-    update_result();
+    try {
+      update_input();
+      update_result();
+    } catch(error) {
+      const textarea = document.getElementById(ResultTextAreaID);
+      textarea.value = error;
+    }
   };
   document.getElementById(OpenFileID).onchange = openFile;
 
