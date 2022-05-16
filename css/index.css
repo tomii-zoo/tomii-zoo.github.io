@@ -5,6 +5,16 @@ body {
   width: 90%;
 }
 
+a:link {
+  color: blue;
+}
+a:hover {
+  color: aqua;
+}
+a:visited {
+  color: red;
+}
+
 #edit {
   background-color: black;
   color: white;
@@ -17,6 +27,13 @@ body {
   width: 90%;
   height: 1000px;
   line-height: 1.2;
+}
+
+textarea {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  border-radius: 1em;  
 }
 
 input {
@@ -37,13 +54,3 @@ button {
   height: 60px;
   border-radius: 1em;
 }
-
-/*
-#content {
-  height: 80%
-}
-
-#menu {
-  height: 20%
-}
-*/
