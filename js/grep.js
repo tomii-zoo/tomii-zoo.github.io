@@ -46,12 +46,13 @@ function update_input() {
 }
 
 function update_result() {
-  // search lines
-  console.log(`${filename}:`);
+  const start = performance.now();
+
   const textarea = document.getElementById(ResultTextAreaID);
   const lines = filetext.split("\n");
 
-  textarea.value = `filename: ${filename}\n`;
+  textarea.value = `Filename: ${filename}\n`;
+  textarea.value += `Lines: ${lines.length}\n`;
   textarea.value += "\n";
 
   let is_match = false;
@@ -65,6 +66,9 @@ function update_result() {
   if (!is_match) {
     textarea.value += "Not match";
   }
+
+  const end = performance.now();
+  console.log(`performance => ${(end - start).toFixed(3)}ms`);
 }
 
 setup();
