@@ -45,7 +45,7 @@ function update_input() {
   re = new RegExp(textarea.value);
 }
 
-function update_result() {
+async function update_result() {
   const start = performance.now();
 
   const textarea = document.getElementById(ResultTextAreaID);
