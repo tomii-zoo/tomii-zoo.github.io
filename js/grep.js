@@ -56,6 +56,7 @@ function post_result() {
 }
 
 function update_result(text) {
+  const textarea = document.getElementById(ResultTextAreaID);
   textarea.value = text;
 }
 
