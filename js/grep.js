@@ -54,7 +54,8 @@ function update_input() {
 
 function post_result() {
   console.log("post to worker ----->");
-  postMessage([re, filetext]);
+  const inputRe = document.getElementById(InputTextAreaID);
+  postMessage([inputRe, filetext]);
 }
 
 function update_result(text) {

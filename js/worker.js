@@ -1,7 +1,6 @@
 onmessage = function(e) {
   console.log("worker works✅");
-
-  let re = e.data[0];
+  let re = new RegExp(e.data[0]);
   let filetext = e.data[1];
 
   let text = "";
