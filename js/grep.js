@@ -1,8 +1,9 @@
 // worker thread
 const worker = new Worker('js/worker.js');
-worker.addEventListener('message', (text) => {
-  update_result(text);
-});
+worker.onmessage = function(e) {
+  update_result(e.data);
+  console.log("<---- received from worker.");
+}
 
 // DOM IDs
 const InputTextAreaID = "input";
@@ -52,6 +53,7 @@ function update_input() {
 }
 
 function post_result() {
+  console.log("post to worker ----->");
   postMessage([re, filetext]);
 }
 

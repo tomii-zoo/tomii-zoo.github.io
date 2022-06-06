@@ -1,31 +1,31 @@
-self.addEventListener('message', (e) => {
-    console.log("worker works✅");
+onmessage = function(e) {
+  console.log("worker works✅");
 
-    let re = e.data[0];
-    let filetext = e.data[1];
+  let re = e.data[0];
+  let filetext = e.data[1];
 
-    let text = "";
-    const start = performance.now();
-    const lines = filetext.split("\n");
+  let text = "";
+  const start = performance.now();
+  const lines = filetext.split("\n");
+
+  text = `Filename: ${filename}\n`;
+  text += `Lines: ${lines.length}\n`;
+  text += "\n";
   
-    text = `Filename: ${filename}\n`;
-    text += `Lines: ${lines.length}\n`;
-    text += "\n";
-    
-    let is_match = false;
-    for (let i = 0; i < lines.length; i++) {
-      if (re.test(lines[i])) {
-        is_match = true;
-        text += `L${i}: ${lines[i]}\n`;
-      }
+  let is_match = false;
+  for (let i = 0; i < lines.length; i++) {
+    if (re.test(lines[i])) {
+      is_match = true;
+      text += `L${i}: ${lines[i]}\n`;
     }
+  }
 
-    if (!is_match) {
-        text += "Not match";
-    }
+  if (!is_match) {
+      text += "Not match";
+  }
 
-    const end = performance.now();
-    console.log(`performance => ${(end - start).toFixed(3)}ms`);    
+  const end = performance.now();
+  console.log(`performance => ${(end - start).toFixed(3)}ms`);    
 
-    self.postMessage(text);
-});
+  postMessage(text);
+}
