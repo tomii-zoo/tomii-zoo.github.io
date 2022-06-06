@@ -1,5 +1,7 @@
-//
-self.addEventListener('message', (re, filetext) => {
+self.addEventListener('message', (e) => {
+    let re = e.data[0];
+    let filetext = e.data[1];
+
     let text = "";
     const start = performance.now();
     const lines = filetext.split("\n");

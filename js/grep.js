@@ -1,5 +1,5 @@
 // worker thread
-const worker = new Worker('worker.js');
+const worker = new Worker('js/worker.js');
 worker.addEventListener('message', (text) => {
   update_result(text);
 });
@@ -10,7 +10,7 @@ const ResultTextAreaID = "result";
 const OpenFileID = "openfile";
 
 // reqular expression pattern
-let re = new RegExp('function');
+let re = new RegExp('public|function');
 
 // fileinfo
 let filename = "";
@@ -52,7 +52,7 @@ function update_input() {
 }
 
 function post_result() {
-  postMessage(re, filetext);
+  postMessage([re, filetext]);
 }
 
 function update_result(text) {
