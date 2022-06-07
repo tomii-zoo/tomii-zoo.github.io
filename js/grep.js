@@ -1,17 +1,10 @@
-// worker thread
-const worker = new Worker('js/worker.js');
-worker.onmessage = function(e) {
-  update_result(e.data);
-  console.log("<---- received from worker.");
-}
-
 // DOM IDs
 const InputTextAreaID = "input";
 const ResultTextAreaID = "result";
 const OpenFileID = "openfile";
 
 // reqular expression pattern
-let re = new RegExp('public|function');
+let re = new RegExp('function');
 
 // fileinfo
 let filename = "";
@@ -21,7 +14,7 @@ function setup() {
   document.getElementById(InputTextAreaID).oninput = () => {
     try {
       update_input();
-      post_result();
+      update_result();
     } catch(error) {
       const textarea = document.getElementById(ResultTextAreaID);
       textarea.value = error;
@@ -43,7 +36,7 @@ function openFile() {
   fileReader.readAsText(file);
   fileReader.onload = () => {
     filetext = fileReader.result;
-    post_result();
+    update_result();
   };
 }
 
@@ -52,15 +45,30 @@ function update_input() {
   re = new RegExp(textarea.value);
 }
 
-function post_result() {
-  console.log("post to worker ----->");
-  const inputRe = document.getElementById(InputTextAreaID);
-  postMessage([inputRe.value, filetext]);
-}
+async function update_result() {
+  const start = performance.now();
 
-function update_result(text) {
   const textarea = document.getElementById(ResultTextAreaID);
-  textarea.value = text;
+  const lines = filetext.split("\n");
+
+  textarea.value = `Filename: ${filename}\n`;
+  textarea.value += `Lines: ${lines.length}\n`;
+  textarea.value += "\n";
+
+  let is_match = false;
+  for (let i = 0; i < lines.length; i++) {
+    if (re.test(lines[i])) {
+      is_match = true;
+      textarea.value += `L${i}: ${lines[i]}\n`;
+    }
+  }
+
+  if (!is_match) {
+    textarea.value += "Not match";
+  }
+
+  const end = performance.now();
+  console.log(`performance => ${(end - start).toFixed(3)}ms`);
 }
 
 setup();
