@@ -14,6 +14,12 @@ const ButtonClearID = "clear";
 
 const InitializeValue = "input your text...";
 
+function setTime() {
+  const text = document.getElementById("time");
+  const date = new Date();
+  text.textContent = date;
+}
+
 /**
  * Reference TextArea Value
  */
