@@ -19,6 +19,12 @@ const vertices = new Float32Array([
 window.onload = initGL;
 
 function initGL() {
+  document.getElementById("fs").value = FSHADER_CODE;
+  document.getElementById("vs").value = VSHADER_CODE;
+
+  document.getElementById("run").onclick = reloadGL;
+  document.getElementById("rest").onclick = initGL;
+
   const canvas = document.querySelector('#glcanvas');
   const gl = canvas.getContext('webgl');
 
@@ -30,9 +36,6 @@ function initGL() {
   //a_Positionが参照できる
   const program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE);
   gl.useProgram(program);
-
-  // gl.clearColor(0.0, 0.0, 1.0, 0.5);
-  // gl.clear(gl.COLOR_BUFFER_BIT);
 
   const vertexBuffer = gl.createBuffer();
   if (!vertexBuffer) {
@@ -52,8 +55,6 @@ function initGL() {
 function render(gl) {
   gl.clearColor(0, 0, 0.5, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
-  //gl.drawArrays(gl.POINTS, 0, 1);
-
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
 }
 
@@ -72,6 +73,7 @@ function createShader(gl, type, source) {
   if (!compiled) {
     var log = gl.getShaderInfoLog(shader);
     console.error('Failed to compile a shader\n' + log);
+    alert('Failed to compile a shader\n' + log);
     gl.deleteShader(shader);
     return null;
   }
@@ -96,6 +98,7 @@ function createProgram(gl, vshader, fshader) {
   if (!linked) {
     var log = gl.getProgramInfoLog(program);
     console.error('Failed to link a program\n' + log);
+    alert('Failed to link a program\n' + log);
     gl.deleteProgram(program);
     return null;
   }
@@ -115,4 +118,35 @@ function createProgramFromCode(gl, vshaderCode, fshaderCode) {
   }
 
   return createProgram(gl, vshader, fshader);
+}
+
+function reloadGL() {
+  let fs = document.getElementById("fs").value;
+  let vs = document.getElementById("vs").value;
+
+  const canvas = document.querySelector('#glcanvas');
+  const gl = canvas.getContext('webgl');
+
+  if (!gl) {
+    alert('Unable to initialize WebGL. Your browser or machine may not support it.');
+    return;
+  }
+
+  //a_Positionが参照できる
+  const program = createProgramFromCode(gl, vs, fs);
+  gl.useProgram(program);
+
+  const vertexBuffer = gl.createBuffer();
+  if (!vertexBuffer) {
+    throw Error('Failed to create the buffer object.');
+  }
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);  
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+  const a_Position = gl.getAttribLocation(program, 'a_Position');
+  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(a_Position);
+
+  render(gl);
 }
