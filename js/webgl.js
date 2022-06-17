@@ -1,13 +1,20 @@
 const VSHADER_CODE = `
+  attribute vec4 a_Position;
+
   void main() {
-    gl_Position = vec4(0.0, 0.0, 0.0, 1.0);  // 画面中央
-    gl_PointSize = 10.0;  // 頂点サイズ
+    gl_Position = a_Position;
   }`;
 
 const FSHADER_CODE = `
   void main() {
-    gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);  // RGBA（緑色）
+    gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
   }`;
+
+const vertices = new Float32Array([
+  0.0, 0.5,    // 1つ目の頂点座標
+  -0.5, -0.5,  // 2つ目の頂点座標
+  0.5, -0.5    // 3つ目の頂点座標
+]);
 
 window.onload = initGL;
 
@@ -20,11 +27,24 @@ function initGL() {
     return;
   }
 
+  //a_Positionが参照できる
+  const program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE);
+  gl.useProgram(program);
+
   // gl.clearColor(0.0, 0.0, 1.0, 0.5);
   // gl.clear(gl.COLOR_BUFFER_BIT);
 
-  const program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE);
-  gl.useProgram(program);
+  const vertexBuffer = gl.createBuffer();
+  if (!vertexBuffer) {
+    throw Error('Failed to create the buffer object.');
+  }
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);  
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+  const a_Position = gl.getAttribLocation(program, 'a_Position');
+  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(a_Position);
 
   render(gl);
 }
@@ -32,7 +52,9 @@ function initGL() {
 function render(gl) {
   gl.clearColor(0, 0, 0.5, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.POINTS, 0, 1);
+  //gl.drawArrays(gl.POINTS, 0, 1);
+
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
 }
 
 function createShader(gl, type, source) {
