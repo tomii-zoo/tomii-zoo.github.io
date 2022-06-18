@@ -1,14 +1,14 @@
 const VSHADER_CODE = `
-  attribute vec4 a_Position;
+attribute vec4 a_Position;
 
-  void main() {
-    gl_Position = a_Position;
-  }`;
+void main() {
+  gl_Position = a_Position;
+}`;
 
 const FSHADER_CODE = `
-  void main() {
-    gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
-  }`;
+void main() {
+  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+}`;
 
 const vertices = new Float32Array([
   0.0, 0.5,    // 1つ目の頂点座標
