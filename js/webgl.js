@@ -1,13 +1,16 @@
 const VSHADER_CODE = `
-attribute vec4 a_Position;
+attribute vec4 pos;
 
 void main() {
-  gl_Position = a_Position;
+  gl_Position = pos;
 }`;
 
 const FSHADER_CODE = `
+precision mediump float;
+uniform float time;
+
 void main() {
-  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+  gl_FragColor = vec4(sin(time), cos(time), sin(time), 1.0);
 }`;
 
 const vertices = new Float32Array([
@@ -16,8 +19,18 @@ const vertices = new Float32Array([
   0.5, -0.5    // 3つ目の頂点座標
 ]);
 
+let t = 0;
+
 window.onload = initGL;
 
+let canvas = null;
+let gl = null;
+let program = null;
+let animationHandle = null;
+
+/**
+ * WebGL初期化処理
+ */
 function initGL() {
   document.getElementById("fs").value = FSHADER_CODE;
   document.getElementById("vs").value = VSHADER_CODE;
@@ -25,16 +38,15 @@ function initGL() {
   document.getElementById("run").onclick = reloadGL;
   document.getElementById("rest").onclick = initGL;
 
-  const canvas = document.querySelector('#glcanvas');
-  const gl = canvas.getContext('webgl');
+  canvas = document.querySelector('#glcanvas');
+  gl = canvas.getContext('webgl');
 
   if (!gl) {
     alert('Unable to initialize WebGL. Your browser or machine may not support it.');
     return;
   }
 
-  //a_Positionが参照できる
-  const program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE);
+  program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE);
   gl.useProgram(program);
 
   const vertexBuffer = gl.createBuffer();
@@ -45,17 +57,59 @@ function initGL() {
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);  
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
-  const a_Position = gl.getAttribLocation(program, 'a_Position');
+  const a_Position = gl.getAttribLocation(program, 'pos');
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(a_Position);
 
-  render(gl);
+  window.cancelAnimationFrame(animationHandle);
+  renderloop();
 }
 
-function render(gl) {
+/**
+ * WebGL再初期化処理
+ */
+function reloadGL() {
+  let fs = document.getElementById("fs").value;
+  let vs = document.getElementById("vs").value;
+
+  canvas = document.querySelector('#glcanvas');
+  gl = canvas.getContext('webgl');
+
+  if (!gl) {
+    alert('Unable to initialize WebGL. Your browser or machine may not support it.');
+    return;
+  }
+
+  program = createProgramFromCode(gl, vs, fs);
+  gl.useProgram(program);
+
+  const vertexBuffer = gl.createBuffer();
+  if (!vertexBuffer) {
+    throw Error('Failed to create the buffer object.');
+  }
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);  
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+  const a_Position = gl.getAttribLocation(program, 'pos');
+  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(a_Position);
+  
+  window.cancelAnimationFrame(animationHandle);
+  renderloop();
+}
+
+/**
+ * 描画ループ処理
+ */
+function renderloop(timeStamp) {
+  var time = gl.getUniformLocation(program, "time");
+  gl.uniform1f(time, timeStamp / 1000.0);
+
   gl.clearColor(0, 0, 0.5, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+  animationHandle = window.requestAnimationFrame(renderloop);
 }
 
 function createShader(gl, type, source) {
@@ -118,35 +172,4 @@ function createProgramFromCode(gl, vshaderCode, fshaderCode) {
   }
 
   return createProgram(gl, vshader, fshader);
-}
-
-function reloadGL() {
-  let fs = document.getElementById("fs").value;
-  let vs = document.getElementById("vs").value;
-
-  const canvas = document.querySelector('#glcanvas');
-  const gl = canvas.getContext('webgl');
-
-  if (!gl) {
-    alert('Unable to initialize WebGL. Your browser or machine may not support it.');
-    return;
-  }
-
-  //a_Positionが参照できる
-  const program = createProgramFromCode(gl, vs, fs);
-  gl.useProgram(program);
-
-  const vertexBuffer = gl.createBuffer();
-  if (!vertexBuffer) {
-    throw Error('Failed to create the buffer object.');
-  }
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);  
-  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
-  const a_Position = gl.getAttribLocation(program, 'a_Position');
-  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(a_Position);
-
-  render(gl);
 }
