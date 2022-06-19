@@ -1,14 +1,3 @@
-const INIT_VSHADER_CODE = `
-precision highp float;
-
-attribute vec4 pos;
-uniform float time;
-uniform vec2 resolution;
-
-void main() {
-  gl_Position = pos;
-}`
-
 const INIT_FSHADER_CODE = `
 precision highp float;
 uniform float time;
@@ -24,6 +13,17 @@ void main() {
 
   gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
 }`;
+
+const INIT_VSHADER_CODE = `
+precision highp float;
+
+attribute vec4 pos;
+uniform float time;
+uniform vec2 resolution;
+
+void main() {
+  gl_Position = pos;
+}`
 
 const vertices = new Float32Array([
   1.0, 1.0,
