@@ -28,15 +28,20 @@ let gl = null;
 let program = null;
 let animationHandle = null;
 
+const FSID = "fs";
+const VSID = "vs";
+const ButtonRunID = "run";
+const ButtonResetID = "reset";
+
 /**
  * WebGL初期化処理
  */
 function initGL() {
-  document.getElementById("fs").value = FSHADER_CODE;
-  document.getElementById("vs").value = VSHADER_CODE;
+  document.getElementById(FSID).value = FSHADER_CODE;
+  document.getElementById(VSID).value = VSHADER_CODE;
 
-  document.getElementById("run").onclick = reloadGL;
-  document.getElementById("rest").onclick = initGL;
+  document.getElementById(ButtonRunID).onclick = reloadGL;
+  document.getElementById(ButtonResetID).onclick = initGL;
 
   canvas = document.querySelector('#glcanvas');
   gl = canvas.getContext('webgl');
@@ -69,8 +74,8 @@ function initGL() {
  * WebGL再初期化処理
  */
 function reloadGL() {
-  let fs = document.getElementById("fs").value;
-  let vs = document.getElementById("vs").value;
+  let fs = document.getElementById(FSID).value;
+  let vs = document.getElementById(VSID).value;
 
   canvas = document.querySelector('#glcanvas');
   gl = canvas.getContext('webgl');
@@ -136,7 +141,7 @@ function createShader(gl, type, source) {
 }
 
 function createProgram(gl, vshader, fshader) {
-  var program = gl.createProgram();
+  program = gl.createProgram();
   if (!program) {
     return null;
   }
