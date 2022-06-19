@@ -1,30 +1,38 @@
 const INIT_VSHADER_CODE = `
-precision mediump float;
+precision highp float;
 
 attribute vec4 pos;
 uniform float time;
+uniform vec2 resolution;
 
 void main() {
   gl_Position = pos;
-
-  float s = abs(sin(2. * time));
-  gl_Position.w = s;
 }`
 
 const INIT_FSHADER_CODE = `
-precision mediump float;
+precision highp float;
 uniform float time;
+uniform vec2 resolution;
 
 void main() {
-  float s = sin(time);
-  float c = cos(time);
-  gl_FragColor = vec4(s, c, s, 1.0);
+  vec2 position = ( gl_FragCoord.xy / resolution.xy ) + 2.0 / 4.0;
+
+  float color = 0.0;
+  color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+  color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+  color *= sin( time / 10.0 ) * 0.5;
+
+  gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
 }`;
 
 const vertices = new Float32Array([
-  0.0, 0.5,
-  -0.5, -0.5,
-  0.5, -0.5
+  1.0, 1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+
+  -1.0, 1.0,
+  1.0, -1.0,
+  -1.0, -1.0,
 ]);
 
 let canvas = null;
@@ -88,9 +96,13 @@ function renderloop(timeStamp) {
   var time = gl.getUniformLocation(program, "time");
   gl.uniform1f(time, timeStamp / 1000.0);
 
+  var resolution = gl.getUniformLocation(program, "resolution");
+  gl.uniform2f(resolution, canvas.width, canvas.height);
+
   gl.clearColor(0, 0, 0.5, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 3, 3);
   animationHandle = window.requestAnimationFrame(renderloop);
 }
 
