@@ -1,4 +1,4 @@
-const VSHADER_CODE = `
+const INIT_VSHADER_CODE = `
 precision mediump float;
 
 attribute vec4 pos;
@@ -11,7 +11,7 @@ void main() {
   gl_Position.w = s;
 }`
 
-const FSHADER_CODE = `
+const INIT_FSHADER_CODE = `
 precision mediump float;
 uniform float time;
 
@@ -22,14 +22,10 @@ void main() {
 }`;
 
 const vertices = new Float32Array([
-  0.0, 0.5,    // 1つ目の頂点座標
-  -0.5, -0.5,  // 2つ目の頂点座標
-  0.5, -0.5    // 3つ目の頂点座標
+  0.0, 0.5,
+  -0.5, -0.5,
+  0.5, -0.5
 ]);
-
-let t = 0;
-
-window.onload = initGL;
 
 let canvas = null;
 let gl = null;
@@ -38,49 +34,25 @@ let animationHandle = null;
 
 const FSID = "fs";
 const VSID = "vs";
+
 const ButtonRunID = "run";
+const ButtonSaveID = "save";
 const ButtonResetID = "reset";
 
+window.onload = setup;
+
 /**
- * WebGL初期化処理
+ * エントリポイント
  */
-function initGL() {
-  document.getElementById(FSID).value = FSHADER_CODE;
-  document.getElementById(VSID).value = VSHADER_CODE;
-
+function setup() {
   document.getElementById(ButtonRunID).onclick = reloadGL;
-  document.getElementById(ButtonResetID).onclick = initGL;
+  document.getElementById(ButtonSaveID).onclick = saveLS;
+  document.getElementById(ButtonResetID).onclick = clearLS;
 
-  canvas = document.querySelector('#glcanvas');
-  gl = canvas.getContext('webgl');
-
-  if (!gl) {
-    alert('Unable to initialize WebGL. Your browser or machine may not support it.');
-    return;
-  }
-
-  program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE);
-  gl.useProgram(program);
-
-  const vertexBuffer = gl.createBuffer();
-  if (!vertexBuffer) {
-    throw Error('Failed to create the buffer object.');
-  }
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);  
-  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
-  const a_Position = gl.getAttribLocation(program, 'pos');
-  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(a_Position);
-
-  window.cancelAnimationFrame(animationHandle);
-  renderloop();
+  loadLS();
+  reloadGL();
 }
 
-/**
- * WebGL再初期化処理
- */
 function reloadGL() {
   let fs = document.getElementById(FSID).value;
   let vs = document.getElementById(VSID).value;
@@ -112,9 +84,6 @@ function reloadGL() {
   renderloop();
 }
 
-/**
- * 描画ループ処理
- */
 function renderloop(timeStamp) {
   var time = gl.getUniformLocation(program, "time");
   gl.uniform1f(time, timeStamp / 1000.0);
@@ -135,7 +104,6 @@ function createShader(gl, type, source) {
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
 
-  // コンパイル結果を検査する
   const compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
   if (!compiled) {
     var log = gl.getShaderInfoLog(shader);
@@ -160,7 +128,6 @@ function createProgram(gl, vshader, fshader) {
   gl.deleteShader(fshader);
   gl.linkProgram(program);
 
-  // リンクエラーの確認
   var linked = gl.getProgramParameter(program, gl.LINK_STATUS);
   if (!linked) {
     var log = gl.getProgramInfoLog(program);
@@ -185,4 +152,45 @@ function createProgramFromCode(gl, vshaderCode, fshaderCode) {
   }
 
   return createProgram(gl, vshader, fshader);
+}
+
+function saveLS() {
+  const valueFS = document.getElementById(FSID).value;
+  localStorage.setItem(FSID, valueFS);
+  console.log("save localstorage => " + valueFS);
+
+  const valueVS = document.getElementById(VSID).value;
+  localStorage.setItem(VSID, valueVS);
+  console.log("save localstorage => " + valueVS);
+
+  const p = document.createElement("p");
+  p.textContent = "SAVED!";
+  document.body.appendChild(p);
+}
+
+function clearLS() {
+  localStorage.clear();
+  loadLS();
+  reloadGL();
+}
+
+function loadLS() {
+  const textareaFS = document.getElementById(FSID);
+  const textareaVS = document.getElementById(VSID);
+
+  const fs_savedata = localStorage.getItem(FSID);
+  if (fs_savedata == null) {
+    textareaFS.value = INIT_FSHADER_CODE;
+  } else {
+    textareaFS.value = fs_savedata;
+  }
+  console.log("loaded => " + textareaFS.value);
+
+  const vs_savedata = localStorage.getItem(VSID);
+  if (vs_savedata == null) {
+    textareaVS.value = INIT_VSHADER_CODE;
+  } else {
+    textareaVS.value = vs_savedata;
+  }
+  console.log("loaded => " + textareaVS.value);
 }
