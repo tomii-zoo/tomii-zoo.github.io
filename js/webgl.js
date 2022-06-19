@@ -1,16 +1,24 @@
 const VSHADER_CODE = `
+precision mediump float;
+
 attribute vec4 pos;
+uniform float time;
 
 void main() {
   gl_Position = pos;
-}`;
+
+  float s = abs(sin(2. * time));
+  gl_Position.w = s;
+}`
 
 const FSHADER_CODE = `
 precision mediump float;
 uniform float time;
 
 void main() {
-  gl_FragColor = vec4(sin(time), cos(time), sin(time), 1.0);
+  float s = sin(time);
+  float c = cos(time);
+  gl_FragColor = vec4(s, c, s, 1.0);
 }`;
 
 const vertices = new Float32Array([
