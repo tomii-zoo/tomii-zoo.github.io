@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <title>Fetch Editor</title>
+    <meta charset="utf-8">
+    <link href="css/index.css" rel="stylesheet">
+    <script>
+      const INIT_URL = "https://tomii-zoo.github.io/";
+      window.onload = () => {
+        // init url
+        const textURL = document.getElementById("url");
+        textURL.value = INIT_URL;
+
+        // do fetch
+        const btnRun = document.getElementById("run");
+        const txtResponse = document.getElementById("response");
+        const url = document.getElementById("url").value;
+
+        btnRun.onclick = () => {
+          txtResponse.value = "";
+          fetch("http://httpbin.org/get")
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              txtResponse.value += data.url;
+            });
+        }
+
+        // rest url
+        const btnReset = document.getElementById("reset");
+        btnReset.onclick = () => {
+          const textURL = document.getElementById("url");
+          textURL.value = INIT_URL;
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <h2>Fetch Demo</h2>
+
+    <p>URL</p>
+    <textarea id="url" cols="50">index.html</textarea>
+    </br>Fetch Data</br><textarea id="response" cols="50" rows="20"></textarea>
+
+    <p>Menu</p>
+    <button id="run">Run</button>
+    </br><button id="save">Save</button>
+    </br></br><button id="reset">Reset</button>
+  </body>
+</html>
