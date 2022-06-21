@@ -18,7 +18,7 @@
 
         btnRun.onclick = () => {
           txtResponse.value = "";
-          fetch("http://httpbin.org/get")
+          fetch(INIT_URL)
             .then(response => response.json())
             .then(data => {
               console.log(data);
