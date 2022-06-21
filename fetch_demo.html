@@ -14,11 +14,11 @@
         // do fetch
         const btnRun = document.getElementById("run");
         const txtResponse = document.getElementById("response");
-        const url = document.getElementById("url").value;
 
         btnRun.onclick = () => {
+          const url = document.getElementById("url").value;
           txtResponse.value = "";
-          fetch(INIT_URL)
+          fetch(url)
             .then(response => response.text())
             .then(text => {
               txtResponse.value += text;
@@ -40,7 +40,7 @@
 
     <p>URL</p>
     <textarea id="url" cols="50">index.html</textarea>
-    </br>Fetch Data</br><textarea id="response" cols="50" rows="20"></textarea>
+    </br>Fetch Data</br><textarea id="response" cols="100" rows="40"></textarea>
 
     <p>Menu</p>
     <button id="run">Run</button>
