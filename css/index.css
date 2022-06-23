@@ -32,10 +32,6 @@ a:hover {
   line-height: 1.2;
 }
 
-canvas {
-  border: solid 1px white;
-}
-
 textarea {
   background-color: black;
   color: white;
