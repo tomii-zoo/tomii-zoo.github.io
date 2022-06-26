@@ -1,25 +1,28 @@
 const INIT_FSHADER_CODE = `
 precision highp float;
-varying highp vec2 vTextureCoord;
+uniform float time;
+uniform vec2 resolution;
 
-      uniform sampler2D uSampler;
+void main() {
+  vec2 position = ( gl_FragCoord.xy / resolution.xy ) + 2.0 / 4.0;
 
-      void main(void) {
-        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-      }`;
+  float color = 0.0;
+  color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+  color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+  color *= sin( time / 10.0 ) * 0.5;
+
+  gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
+}`;
 
 const INIT_VSHADER_CODE = `
-attribute vec3 aVertexPosition;
-attribute vec2 aTextureCoord;
+precision highp float;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
+attribute vec4 pos;
+uniform float time;
+uniform vec2 resolution;
 
-varying highp vec2 vTextureCoord;
-
-void main(void) {
-  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vTextureCoord = aTextureCoord;
+void main() {
+  gl_Position = pos;
 }`
 
 const vertices = new Float32Array([
@@ -43,8 +46,6 @@ const VSID = "vs";
 const ButtonRunID = "run";
 const ButtonSaveID = "save";
 const ButtonResetID = "reset";
-
-let cubeTexture = null;
 
 window.onload = setup;
 
@@ -87,54 +88,6 @@ function reloadGL() {
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(a_Position);
   
-  const textureCoordAttribute = gl.getAttribLocation(program, "aTextureCoord");
-  gl.enableVertexAttribArray(textureCoordAttribute);
-
-
-  gl.activeTexture(gl.TEXTURE0);
-  gl.bindTexture(gl.TEXTURE_2D, cubeTexture);
-  gl.uniform1i(gl.getUniformLocation(program, "uSampler"), 0);
-
-  initTextures();
-  cubeVerticesTextureCoordBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, cubeVerticesTextureCoordBuffer);
-
-  var textureCoordinates = [
-    // 前面
-    0.0,  0.0,
-    1.0,  0.0,
-    1.0,  1.0,
-    0.0,  1.0,
-    // 背面
-    0.0,  0.0,
-    1.0,  0.0,
-    1.0,  1.0,
-    0.0,  1.0,
-    // 上面
-    0.0,  0.0,
-    1.0,  0.0,
-    1.0,  1.0,
-    0.0,  1.0,
-    // 底面
-    0.0,  0.0,
-    1.0,  0.0,
-    1.0,  1.0,
-    0.0,  1.0,
-    // 右側面
-    0.0,  0.0,
-    1.0,  0.0,
-    1.0,  1.0,
-    0.0,  1.0,
-    // 左側面
-    0.0,  0.0,
-    1.0,  0.0,
-    1.0,  1.0,
-    0.0,  1.0
-  ];
-
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoordinates),
-                gl.STATIC_DRAW);
-
   window.cancelAnimationFrame(animationHandle);
   renderloop();
 }
@@ -252,20 +205,4 @@ function loadLS() {
     textareaVS.value = vs_savedata;
   }
   console.log("loaded => " + textareaVS.value);
-}
-
-function initTextures() {
-  cubeTexture = gl.createTexture();
-  cubeImage = new Image();
-  cubeImage.onload = function() { handleTextureLoaded(cubeImage, cubeTexture); }
-  cubeImage.src = "crystal_128x128.png";
-}
-
-function handleTextureLoaded(image, texture) {
-  gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-  gl.generateMipmap(gl.TEXTURE_2D);
-  gl.bindTexture(gl.TEXTURE_2D, null);
 }
