@@ -6,6 +6,9 @@ let imgBg = null;
 
 let x = 180;
 let y = 180;
+let vx = 2;
+let vy = 4;
+
 const w = 100;
 const h = 100;
 
@@ -40,13 +43,22 @@ function render(timestamp) {
   context.drawImage(imgBg, 0, 0);
 
   // player
-  const s = 100 * Math.sin(timestamp * 0.004);
-  context.drawImage(imgPlayer, x, y + s, w, h);
+  // const s = 100 * Math.sin(timestamp * 0.004);
+  context.drawImage(imgPlayer, x, y, w, h);
+  x += vx;
+  if (x < 0 || x > 400) {
+    vx *= -1;
+  }
+
+  y += vy;
+  if (y < 0 || y > 400) {
+    vy *= -1;
+  }
 
   // texts
   context.font = "18px Arial";
   context.fillStyle = "white";
-  context.fillText('WASD : Move', 350, 460);
+  // context.fillText('WASD : Move', 350, 460);
 
   const seconds = timestamp * 0.001;
   context.fillText(`Time => ${seconds.toFixed(2)}`, 350, 30);
