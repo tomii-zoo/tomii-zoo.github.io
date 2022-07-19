@@ -1,6 +1,8 @@
 let canvas = null;
 let context = null;
+
 let imgPlayer = null;
+let imgBg = null;
 
 let x = 180;
 let y = 180;
@@ -15,6 +17,12 @@ function setup() {
   canvas = document.querySelector('#canvas2d');
   context = canvas.getContext('2d');
 
+  imgBg = new Image();
+  imgBg.src = 'bg.png';
+  imgBg.onload = () => {
+    window.requestAnimationFrame(render);
+  }
+
   imgPlayer = new Image();
   imgPlayer.src = 'crystal_400x400.png';
   imgPlayer.onload = () => {
@@ -27,9 +35,15 @@ function render(timestamp) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "black";
   context.fillRect(0, 0, canvas.width, canvas.height);
+
+  // bg
+  context.drawImage(imgBg, 0, 0);
+
+  // player
   const s = 100 * Math.sin(timestamp * 0.004);
   context.drawImage(imgPlayer, x, y + s, w, h);
 
+  // texts
   context.font = "18px Arial";
   context.fillStyle = "white";
   context.fillText('WASD : Move', 350, 460);
